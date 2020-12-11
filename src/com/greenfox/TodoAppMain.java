@@ -17,8 +17,8 @@ public class TodoAppMain {
             System.out.println("Unsupported argument");
             printMenu();
         } else {
-            TaskHandler myTodoList = new TaskHandler(args);
-            myTodoList.handleList();
+            new TaskHandler(args);
+            ArgumentHandler.handleList();
         }
     }
 

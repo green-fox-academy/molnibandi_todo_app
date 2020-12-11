@@ -7,12 +7,12 @@ import java.util.List;
 
 public class TaskHandler {
 
-    String[] arguments;
-    Path myListPath;
-    List<String> lines;
+    static String[] arguments;
+    static Path myListPath;
+    static List<String> lines;
 
     public TaskHandler(String[] arguments) {
-        this.arguments = arguments;
+        TaskHandler.arguments = arguments;
         try {
             myListPath = Paths.get("todoList.txt");
             lines = Files.readAllLines(myListPath);
@@ -21,27 +21,14 @@ public class TaskHandler {
         }
     }
 
-    public void writeFile() {
+    public static void writeFile() {
         try {
             Files.write(myListPath, lines);
         } catch (Exception e) {
             System.out.println("error");
         }
     }
-
-    public void handleList() {
-        if (arguments[0].equals("-l")) {
-            printTasks();
-        } else if (arguments[0].equals("-a")) {
-            add();
-        } else if (arguments[0].equals("-r")) {
-            removeTask();
-        } else if (arguments[0].equals("-c")) {
-            checkTask();
-        }
-    }
-
-    public void printTasks() {
+    public static void printTasks() {
         if (lines.size() == 0) {
             System.out.println("No todos for today! :)");
         } else {
@@ -51,7 +38,7 @@ public class TaskHandler {
         }
     }
 
-    public void add() {
+    public static void add() {
         if (arguments.length == 1) {
             System.out.println("Unable to add: no task provided");
         } else {
@@ -61,7 +48,7 @@ public class TaskHandler {
         writeFile();
     }
 
-    public void removeTask() {
+    public static void removeTask() {
         int toRemove = checkIndex("remove");
         if (toRemove >= 0) {
             lines.remove(toRemove);
@@ -69,7 +56,7 @@ public class TaskHandler {
         }
     }
 
-    public void checkTask() {
+    public static void checkTask() {
         int toCheck = checkIndex("check");
         if (toCheck >= 0) {
             String taskToCheck = lines.get(toCheck).substring(3);
@@ -79,8 +66,8 @@ public class TaskHandler {
         }
     }
 
-    public int checkIndex(String task) {
-        int toHandle = 0;
+    public static int checkIndex(String task) {
+        int toHandle;
 
         if (arguments.length == 1) {
             System.out.println("Unable to " + task + ": no index provided");
